@@ -1,6 +1,6 @@
 // Arrays are a list of elements
 // zero based,  means first item is 0 indexed
-
+// added this now 12/21/2019
 // Initialize New Array
 let names = ['brian', 'dood', 'susie'];
 // or 
