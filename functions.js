@@ -63,3 +63,40 @@ let jayjay = {
         }
     }
 }
+
+// execution context,  the function has it's own when called onto the stack
+var name = 'john'; // in the window object
+function first() { 
+    var a = 'hello!';
+    second();
+    var x = a + name;
+}
+function second() {
+    var b = 'Hi';
+    third();
+    var z = b + name;
+}
+function third() {
+    var c = 'Hey';
+    var z = c + name;
+}
+first();   // this is now called  // call stack is first in last out
+// global execution context < execution context first() < execution context second() < execution context third()
+// gets broken into variable object (VO) 
+// scope chains 
+// this variable 
+// when function is called
+// create phase - creation of variable object (vo), scope chain, determine this variable
+// 2. execution phase - code of the that generated exectuion context ran line by line
+/*
+argument object is created containing all arguemtns passed into f¨nction
+code is scanned for function declarations , for each function a property is created in 
+variable object pointing to the function - all functions in Variable Object before codes run
+code is scanned for variable declarations
+This means functions and variables are HOISTED - lifted up and available b4 execution phase
+
+functions defined right away, 
+variables are undefined until execution phase. 
+EXECUTION PHASE JUST AFTER CREATION PHASE.
+
+*/

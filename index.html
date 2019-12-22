@@ -25,11 +25,72 @@
             1997 - ECMAScript 1 (es1) first version of javascript   language standard:
                 ECMA language standard
                 Javascript language in practice 
+            ecma is standard and js is language in practice
+            2009 - es5 (ecmascript 5) lots of new features 
+            2015: es6/es2015(ECMAScript 2015) bigget update to language ever! 
+            Now annual release cycle , each year few new changes. 
+            2016/17,18, 19 release of new items. 
+            es5 fully supported in all browsers. 
+            Older browsers don't understand newer versions. 
+            ES6 / 2015
+            ES7 es2016
+            ES8/ ES 2017
+            <h3>ES5</h3>
+            Always need to understand es5 for years, good to know where you started and for understanding
+            older code bases. 
+            Helps you better understand javascript 
+            js fundamentals
+            language works
+            dom manipulation
+            advanced language features 
+             huge real projects
+             <h3>ES6</h3>
+             es6/es2015 intr 
+             async js
+             ajax and api call 
+             modern dev set up (webpack babel) 
+             huge real project
+        </p>
+        <p>
+            <h1>JS behind scenes</h1>
+            js is always hosted in an environment.  
+            in browser,  or  or nodejs web server
+            A js engine is a program that executes js code. 
+            There are several like Chromes v8 engine 
+            spidermonkey ,  javascript core
+            1. Engine has a parser that knows the js rules and parses out the code. if there's an error 
+            the engine will throw an error. 
+            2. If code good, parser creates data structure called abstract syntax tree which is translated into machine 
+            the machine code is code that the computers processor can run 
+            3. this is when the code runs. 
+            <h2>execution context and stack </h2>
+            All js code needs to run in an environment and this is called Execution context.  
+                (it is a box container wrapper which stores variables and in which a peice of our code is evaluaated and exectuted)
+
+                Now, the default execution context
+                is always the global context.
+                Remember that I said that an execution context
+                is where a piece of code is executed.
+                Well, in a global context, all the code
+                that is not inside of any function is executed,
+                and this is very important.
+            It is associated with global object , in browser its window object
+            lastName = window.lastName // true 
+
         </p>
     </head>
 
     <body>
         <h1>Section 2: JavaScript Language Basics</h1>
+        argument object is created containing all arguemtns passed into f¨nction
+code is scanned for function declarations , for each function a property is created in 
+variable object pointing to the function - all functions in Variable Object before codes run
+code is scanned for variable declarations
+This means functions and variables are HOISTED - lifted up and available b4 execution phase
+
+functions defined right away, 
+variables are undefined until execution phase. 
+EXECUTION PHASE JUST AFTER CREATION PHASE.
         <!-- you can write inline or import js.  -->
     </body>
     <script src="script.js"></script>
