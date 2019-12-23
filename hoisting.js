@@ -21,7 +21,7 @@ let retirement = function(year) {
 
 // cause hoisting only works with function declarations not function expressions
 
-
+// yes
 // *** variables. 
 console.log(age) // undefined - cause variables w/out assigned value = undefined,
 let age = 25; 
