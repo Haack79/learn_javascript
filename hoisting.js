@@ -24,12 +24,15 @@ let retirement = function(year) {
 // yes
 // *** variables. 
 console.log(age) // undefined - cause variables w/out assigned value = undefined,
-let age = 25; 
+let age = 25;  // this age defined in global aspect 
 console.log(age) // 25
 
 function foo() {
-    let age = 100;
+    console.log(age); // undefined 
+    let age = 100; // age defined in funciton context 
     console.log(age); // 100
 }
 foo();
-console.log(age); // 25
+console.log(age); // 25 - cause did not have access to function scope, but window scope
+
+// BIGGEST TAKE AWAY,   you can use function declarations before even declaring them in the code. 
