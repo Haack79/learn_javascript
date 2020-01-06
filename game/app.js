@@ -9,9 +9,7 @@ GAME RULES:
 
 */
 let scores, roundScore, activePlayer, dice;
-scores = [0,0];
-roundScore = 0; 
-activePlayer = 0;
+initialize();
 // floor will remove the decimal on a number in js so 4.6 = 4
 // dice = Math.floor(Math.random() * 6) + 1; 
 console.log(dice); 
@@ -25,7 +23,6 @@ console.log(dice);
 let x = document.querySelector('#score-0').textContent; // this gets the value 
 
 // use query selector to change css
-document.querySelector('.dice').style.display = 'none';
 
 // ****** EVENT AND EVENT HANDLING  ****** *****
 // Events: Notifications that are sent to notify the  code that something happened on the page
@@ -45,10 +42,7 @@ here btn is a callback function, it's a function that we pass back into another 
 document.querySelector('.btn-roll').addEventListener('click', btn)
 if didn't want to have the callback, just use an anonymous function 
 */
-document.getElementsById('score-0').textContent = '0';
-document.getElementsById('score-1').textContent = '0';
-document.getElementsById('current-0').textContent = '0';
-document.getElementsById('current-1').textContent = '0';
+
 
 document.querySelector('.btn-roll').addEventListener('click', function() { 
     //1. Random number
@@ -64,7 +58,33 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         roundScore += dice;
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
-        // Next Player
+        // below code would've been repeated so put into a function
+        nextPlayer(); 
+    }
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    // add current score to Global Score
+    scores[activePlayer] += roundScore; // scores[activePlayer] = scores[activePlayer] + roundScore;
+
+    // update the ui 
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+    // check if player won the game
+    if (scores[activePlayer] >= 100) {
+        document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
+        document.querySelector('.dice').style.display = 'none';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    } else {
+        nextPlayer(); 
+    }
+    // Next Player
+    nextPlayer(); 
+})
+
+function nextPlayer() {
+           // Next Player
         // use ternary operator    
         activePlayer === 0 ? activePlayer = 1 : activePlayer =0;
         roundScore = 0; 
@@ -77,8 +97,22 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         // document.querySelector('.player-0-panel').classList.remove('active');
         // document.querySelector('.player-1-panel').classList.add('active');
         document.querySelector('.dice').style.display = 'none'; 
-    }
-})
+};
 
+document.querySelector('.btn-new').addEventListener('click', initialize);
 
+function initialize() {
+    scores = [0, 0];
+    activePlayer = 0;
+    roundScore = 0;
+    document.querySelector('.dice').style.display = 'none';
+    document.getElementsById('score-0').textContent = '0';
+    document.getElementsById('score-1').textContent = '0';
+    document.getElementsById('current-0').textContent = '0';
+    document.getElementsById('current-1').textContent = '0';
+    document.querySelector('#name-0').textContent = 'Player 1';
+    document.querySelector('#name-1').textContent = 'Player 2';
 
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+};
