@@ -149,4 +149,40 @@ function interviewQuestion(job) {
            console.log('hello', + name + ' what do you do?');
         }
     }
-}
+};
+// can return a function because javascript functions are always first class functions in javascript 
+// since they are effectively objects. 
+// when you return a function,  really you are returning an object that has function capabilities. 
+let teacherQuestion = interviewQuestion('teacher'); 
+let designerQuestion = interviewQuestion('designer'); 
+interviewQuestion('henry');
+designerQuestion('susan');
+
+interviewQuestion('teacher')('cody');  // since evaluated left to right,  interviewQuestion is evaluated first,  it comes back with 
+// the answer, and then evaulate the anonymous function inside it with the second parameter called cody 
+// interviewQuetion(teacher) -> anonymous function(cody);
+
+// Immediately invoked function Expressions (IIFE);
+// Normal way to do it. 
+function game() {
+    let scores = Math.random() * 10;
+    console.log(scores >= 5);
+};
+// if want a private variable to hide it,  use iife
+// below is iife, it's tricking the parser into thinking this is an expression and not a function 
+// since what is in parenthesis cannot be a statement and that it should be an expression. not a declaration
+// This is a way to create data privacy,  you can't access score from outside the function 
+// you can extend function by passing parameters into it. 
+// you can only use it once cause never assigned to anything. so not reusable code, just for data privacy. to make variables no one can access or see.
+
+(function () {
+    let score = Math.random() * 10;
+    console.log(score >= 5);
+})();
+// adding parameter to make it more dynamic.
+(function (goodLuck) {
+    let score = Math.random() * 10;
+    console.log(score >= 5 - goodLuck);
+})(5); // will return true  
+console.log(score) // will not work, undefined. 
+// 
