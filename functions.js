@@ -99,4 +99,54 @@ functions defined right away,
 variables are undefined until execution phase. 
 EXECUTION PHASE JUST AFTER CREATION PHASE.
 
-*/
+ FIRST CLASS FUNCTIONS s functions -   remember Functions are also objects. 
+ function is an instance of of the object type 
+ A FUNCTION BEHAVES LIKE any other object
+ we can store functions in variables 
+ we can pass a function as an argument to another function 
+ we can return a function from a function 
+ */
+let years = [1999, 2001, 2000, 2002, 2020];
+function calcArray(arr, fn) {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+        res.push(fn(arr[i]));
+    }
+    return res;
+}
+
+function calcAge(element) {
+    return 2020 - element;
+};
+function isFullAge(element) {
+    return element >= 21; 
+}
+function maxHeartRate(element) {
+    if ( element >= 18 && element <= 81) {
+        return Math.round(206.9 - (0.67 * element));
+    } else {
+        return -1; 
+    }
+     
+}
+let ages = calcArray(years, calcAge); // dont want to run the function on the spot but later when it's called as call back function by the calcArray function
+let fullAges = calcArray(ages, isFullAge); 
+console.log(fullAges);  // true false false false false
+
+// Functions that return functions 
+
+function interviewQuestion(job) {
+    if(job === 'designer') {
+        return function(name) {
+            console.log(name + 'please explain what ux design is');
+        }
+    } else if (job === 'teacher'){
+        return function(name) {
+            console.log('what do you teach', + name); 
+        }
+    } else {
+       return function(name) {
+           console.log('hello', + name + ' what do you do?');
+        }
+    }
+}
