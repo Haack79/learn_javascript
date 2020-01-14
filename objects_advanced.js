@@ -97,5 +97,4 @@ Object.create allows implementing complex inheritance structures in an easier wa
 It is easier because it allows you to directly specify which object should be a prototype. as in above,  henry is the prototype. 
 the function constructor - the new created Object inherits from the constructors prototype property. 
 function constructor is still most popular. 
-
-
+*/
