@@ -88,7 +88,7 @@ let susie = Object.create(personProto,
     {
         name: {value: 'Susie'},
         yearOfBirth: {value: 1982 },
-        job: { value: 'teacher'};
+        job: { value: 'teacher'}
     });
 
 /* 
