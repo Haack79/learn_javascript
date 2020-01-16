@@ -54,12 +54,28 @@ let Person = function(name, yearOfBirth, job) {
         console.log(2020 - this.yearOfBirth); 
     }
 };
+// es2015 Class *****************************
+// class Person {
+//     constructor(name, yearOfBirth, job) {
+//         this.name = name;
+//         this.yearOfBirth = yearOfBirth;
+//         this.job = job;
+//         this.calcAge = function () {
+//             console.log(2020 - this.yearOfBirth);
+//         };
+//     }
+//     // can add to it with prototype
+//     sayName() {
+//         console.log('HI, I AM', this.name);
+//     }
+// }
+////// ***************************** ///////// 
 // can add to it with prototype
 Person.prototype.sayName = function() {
     console.log('HI, I AM' , this.name); 
 } // now all the instances have access to this 
 let henry = new Person('Henry', 1980, 'puppy'); // creating new object with constructor function 
-// new  - key word that crates a brand new empty object
+// new  - key word that creates a brand new empty object
 // first object is created and then the function is called. 
 // good to remember that calling a function creates a new execution context that has a this variable -
 // the this points to the variables in the new empty object created by operator 
@@ -98,3 +114,24 @@ It is easier because it allows you to directly specify which object should be a 
 the function constructor - the new created Object inherits from the constructors prototype property. 
 function constructor is still most popular. 
 */
+// Challenge ******
+let Question = function() {
+    console.log('what is the best language we are learning?')
+    console.log('0: javascript');
+    console.log('1 : some other language');
+    let answer = prompt('what is your answer?')
+    if (answer === '0') {
+        console.log('correct!');
+    } else {
+        let newAnswer = prompt('sorry try again'); 
+        if (newAnswer === '0') {
+            console.log('great job!'); 
+        } else {
+            console.log('sorry you have failed');  
+            window.open("https://developer.mozilla.org/en-US/docs/Web/JavaScript", '_self'); 
+            setTimeout(() => {window.close()}, 1000);
+        }
+    }
+};
+
+

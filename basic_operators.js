@@ -73,5 +73,5 @@ switch(true) {
 // truthy,  all values that are not falsy
 
 let height = 0
-if ( height || height === 0)  // existence check
+if ( height || height === 0) {/*do something*/} // existence check
 // == does type coercion

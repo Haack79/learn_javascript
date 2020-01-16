@@ -6,9 +6,9 @@ let henry = {
     presentation: function(style, timeOfDay) {
         if (style === 'formal') {
             console.log('Good ' + timeOfDay + ', Ladies and Gentlement. I\'m ' +
-            this.name + 'I am a ' + this.jobj + 'and am ' + this.age + 'years old');
+            this.name + 'I am a ' + this.job + 'and am ' + this.age + 'years old');
         } else if (style === 'friendly') { 
-            console.log('Hey! what\'s up!');
+            console.log('Hey! what\'s up! how are you this' + timeOfDay);
         }
     }
 }
