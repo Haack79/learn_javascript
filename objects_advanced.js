@@ -115,23 +115,110 @@ the function constructor - the new created Object inherits from the constructors
 function constructor is still most popular. 
 */
 // Challenge ******
-let Question = function() {
-    console.log('what is the best language we are learning?')
-    console.log('0: javascript');
-    console.log('1 : some other language');
-    let answer = prompt('what is your answer?')
-    if (answer === '0') {
+let score = 0; 
+let Question = function(question, answersArr, answer) {
+    this.question = question,
+    this.answersArr = answersArr, 
+    this.answer = answer,
+    console.log(question); 
+    for (let i = 0; i < answersArr.length; i++) {
+        console.log(i + ':' + answersArr[i]); 
+    }
+    let userAnswer = prompt('what is your answer?')
+    if (userAnswer.toLowerCase() === 'exit') return; 
+    if (userAnswer === answer) {
         console.log('correct!');
+        score += 1; 
+        console.log('your score is now ' + score);
     } else {
         let newAnswer = prompt('sorry try again'); 
-        if (newAnswer === '0') {
+        if (newAnswer === answer) {
             console.log('great job!'); 
         } else {
             console.log('sorry you have failed');  
             window.open("https://developer.mozilla.org/en-US/docs/Web/JavaScript", '_self'); 
-            setTimeout(() => {window.close()}, 1000);
+            // setTimeout(() => {window.close()}, 1000);
         }
     }
 };
+let funLevel = new Question('how fun is javascript?', ['Super Fun', 'some fun', 'meh'], '0'); 
+let whoIsTheCoolest = new Question('who is the coolest?', ['brian', 'Brian', 'Haack'], '1');
+let howManyTeeth = new Question('how many teeth you got?', ['3', '2', '5'], '2');
+let questionsArr = [funLevel, whoIsTheCoolest, howManyTeeth];
+// make this private; 
+
+(function chooseQuestion() {
+    let arrIndx = Math.floor(Math.random() * Math.floor(3));
+    return questionsArr[arrIndx];
+})();
+
+// **************************** 
+// do it with prototype - put it in a function so itwon't interfere with other code. 
+// this will protect this from being interact with. 
+(function() {
+    function Questionator(questions, answers, correct) {
+        this.question = question;
+        this.answers = answers;
+        this.correct = correct;
+    }
+    // write into questions prototype to add to it, this will give access to the other instances to this protoype chain
+    Questionator.prototype.displayQuestion() = function() {
+        console.log(this.question); 
+        for (let i = 0; i < answers.length; i++) {
+            console.log(i + ': ' + this.answers[i]); 
+        }
+    }
+    Questionator.prototype.checkAnswer() = function(userAnswer, scoreCallback) {
+        let sc; 
+        if (userAnswer === this.correct) {
+            console.log('Correct!!');
+            sc = scoreCallback(true);
+        } else {
+            console.log('sorry, wrong answer, try again'); 
+            sc = scoreCallback(false); 
+        }
+        this.displayScore(sc);
+    }
+    Questionator.prototype.displayScore() = function(score) {
+        console.log('your current score ' + score);
+        console.log('--------*************-----------');
+    }
+    
+    // remember this new operator creates a new empty object and sets the "this" variable of this function
+    // to the new empty object that was just created. 
+    let q1 = new Questionator('Is Javascript the coolest language?', ['yes', 'no'], 0);
+    let q2 = new Questionator('What is the name of this course\'s teacher?', ['phil', 'adam', 'brian'], 2); 
+    let q3 = new Questionator('what best describes coding?', ['hard', 'fun', 'challenging', 'all the above'], 2);
+    let  questions = [q1, q2, q3];
+    // create score function to keep score
+    function score() {
+        // set score to start at 0
+        let sc = 0; 
+        // return the value of the function
+        return function(correct) {
+            if (correct) {
+                sc++;
+            }
+            return sc; 
+        }
+    }
+    // with scope and closures,  assign the score function to a variable, even when it's done running will still
+    // have access to the variable in the score() function. 
+    let keepScore = score();
+    // since javascxript has first class functions ( meaning they can be treated like variables), 
+    // can pass them around into other functions etc. 
+    function nextQuestion() {
+        let num = Math.floor(Math.random() * questions.length);
+        questions[n].displayQuestion();
+        let answer = parseInt(prompt('Please select the answer.'));
+        if (answer !== 'exit') {
+            questions[num].checkAnswer(parseInt(answer), keepScore);
+            nextQuestion();
+        }
+    };
+    nextQuestion();
+
+})();
+
 
 
