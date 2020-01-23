@@ -71,7 +71,10 @@ let UIController = (function() {
         inputType: '.add__type',
         inputDescription: '.add__description',
         inputValue: '.add__value',
-        inputBtn: '.add__btn'
+        inputBtn: '.add__btn',
+        incomeContainer: '.income__list',
+        expensesContainer: '.expenses__list'
+
     }
     // public function to get data and return object and assign it to UIController variable.
     return {
@@ -82,6 +85,24 @@ let UIController = (function() {
                 description: document.querySelector(DOMstrings.inputDescription).value,
                 value: document.querySelector(DOMstrings.inputValue).value
             };
+        },
+        addListItem: function(obj, type) {
+            let html, newHtml;
+            // create html string with placeholder text
+        if (type === 'inc') {
+            element = DOMstrings.incomeContainer;
+            html = '<div class="item clearfix" id="income-%id%"> <div class="item__description">$description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>';
+        } else if (type === 'exp') {
+            element = DOMstrings.expensesContainer;
+            html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+        }
+
+            // replace placeholder text with some actual data
+            newHtml = html.replace('%id%', obj.id); 
+            newHtml = newHtml.replace('%description%', obj.description);
+            newHtml = newHtml.replace('%value%', obj.value); 
+            // insert html into the DOM.  (this is where grab a html element on the index and insert into it)
+            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml); 
         },
         getDomStrings: function() {
             return DOMstrings; 
@@ -112,9 +133,10 @@ let controller = (function(budgetCtrl, UICtrl) {
         // when clicked, get field input data
         let input = UICtrl.getInput(); // this comes from the object returned by getInput() function 
         // add item to the budget controller 
+        // this  newItem has the object we are  going to add listItems to above. 
         let newItem = budgetCtrl.addItem(input.type, input.description, input.value);  // pass in the inputs from the UICtrl above that's getting it from the getInput function
         // add the item to the UI 
-
+        UICtrl.addListItem(newItem, input.type);
         // calculate the budget
 
         // display budget on the UI
@@ -132,3 +154,6 @@ let controller = (function(budgetCtrl, UICtrl) {
 // have to set up function constructors and data structure that the app needs. 
 // how to avoid data conflicts in structure
 // how and why to pass data from one structure to another.
+
+// add big chunks of html, replace parts of strings
+// dom manipulation   using insertAdjacentHTML method...
