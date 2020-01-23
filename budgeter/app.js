@@ -41,13 +41,18 @@ let budgetController = (function() {
     };
     return {
         addItem: function(type, des, val) { 
-            let newItem; 
+            let newItem, ID; 
             // get the last id, and then add 1 to it. 
             // below get the array which is either exp or inc, the position of the last element in the array,  
             // then get that last id and add 1 to it. 
             // [exp][length of array].id + 1
-            let ID = data.allItems[type][data.allItems[type].length -1].id + 1; 
-            // figure out if expense or Income
+            if (data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length -1].id + 1;
+            } else {
+                ID = 0; 
+            }
+             
+            // figure out if expense or Income and craete new item based on if inc or exp
             if (type === 'exp') {
                 newItem = new Expense(ID, des, val);
             } else if (type === 'inc') {
@@ -105,9 +110,9 @@ let controller = (function(budgetCtrl, UICtrl) {
     // function to add item
     let ctrlAddItem = function() {
         // when clicked, get field input data
-        let input = UICtrl.getInput();
-        // add item to the budget controller
-
+        let input = UICtrl.getInput(); // this comes from the object returned by getInput() function 
+        // add item to the budget controller 
+        let newItem = budgetCtrl.addItem(input.type, input.description, input.value);  // pass in the inputs from the UICtrl above that's getting it from the getInput function
         // add the item to the UI 
 
         // calculate the budget
