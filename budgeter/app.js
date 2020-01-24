@@ -83,7 +83,7 @@ let UIController = (function() {
             return {
                 type: document.querySelector(DOMstrings.inputType).value, // will be either inc or exp. 
                 description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
+                value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
             };
         },
         addListItem: function(obj, type) {
@@ -103,6 +103,16 @@ let UIController = (function() {
             newHtml = newHtml.replace('%value%', obj.value); 
             // insert html into the DOM.  (this is where grab a html element on the index and insert into it)
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml); 
+        },
+        clearFields: function() {
+            let fields; 
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue); // querySelectorAll returns a list.  like an array but without the array methods. 
+            // turn into array, have to use Array method and slice it,  call it and put in the above , tricks it into being an array. 
+            let fieldsArr = Array.prototype.slice.call(fields); 
+            fieldsArr.forEach(function(current, index, array) {
+                current.value = ''; // this sets description and input to empty; 
+            });
+            fieldsArr[0].focus();
         },
         getDomStrings: function() {
             return DOMstrings; 
@@ -128,18 +138,31 @@ let controller = (function(budgetCtrl, UICtrl) {
             } 
         });
     };
-    // function to add item
+    // function to add item // remember each function must do a specific task. 
+    let updateBudget = function() {
+        // calculate the budget
+
+        // return the budget
+
+        // display budget on the UI
+    };
     let ctrlAddItem = function() {
         // when clicked, get field input data
         let input = UICtrl.getInput(); // this comes from the object returned by getInput() function 
-        // add item to the budget controller 
-        // this  newItem has the object we are  going to add listItems to above. 
-        let newItem = budgetCtrl.addItem(input.type, input.description, input.value);  // pass in the inputs from the UICtrl above that's getting it from the getInput function
-        // add the item to the UI 
-        UICtrl.addListItem(newItem, input.type);
-        // calculate the budget
+        //check if input
+        if (input.description !== "" && isNaN(input.value) && input.value > 0) {
+            // add item to the budget controller 
+            // this  newItem has the object we are  going to add listItems to above. 
+            let newItem = budgetCtrl.addItem(input.type, input.description, input.value);  // pass in the inputs from the UICtrl above that's getting it from the getInput function
+            // add the item to the UI 
+            UICtrl.addListItem(newItem, input.type);
+            // clear the fields 
+            UICtrl.clearFields(); 
+            // calculate and update budget
+            updateBudget();
+        } 
 
-        // display budget on the UI
+
     }
     // create public initialization function 
     return {
@@ -157,3 +180,8 @@ let controller = (function(budgetCtrl, UICtrl) {
 
 // add big chunks of html, replace parts of strings
 // dom manipulation   using insertAdjacentHTML method...
+
+// clear html fields, use queryseletor all, convert list to an array, loop arrays. 
+
+// how to convert field inputs to numbers parseFloat (change number to have decimals), how to prevent false inputs 
+
