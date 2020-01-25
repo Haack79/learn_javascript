@@ -28,6 +28,15 @@ let budgetController = (function() {
         this.description = description;
         this.value = value;
     };
+    // make private function so people don't have access to mess with the total
+    let calculateTotal = function(type) {
+        let sum = 0;
+        data.allItems[type].forEach(function(currentElement) {
+            // sum = sum + currentElement.value; 
+            sum += currentElement.value;
+        });
+        data.totals[type] = sum; 
+    };
     // instead of putting data into a bunch of different variables, best to aggregate it into one big structure of data.
     let data = {
         allItems: {
@@ -37,7 +46,9 @@ let budgetController = (function() {
         totals: {
             exp: 0,
             inc: 0
-        }
+        },
+        budget: 0,
+        percentage: -1 // -1 is usualy what means doesn't exist. 
     };
     return {
         addItem: function(type, des, val) { 
@@ -51,7 +62,7 @@ let budgetController = (function() {
             } else {
                 ID = 0; 
             }
-             
+            
             // figure out if expense or Income and craete new item based on if inc or exp
             if (type === 'exp') {
                 newItem = new Expense(ID, des, val);
@@ -62,7 +73,24 @@ let budgetController = (function() {
             data.allItems[type].push(newItem); 
             // return it to be used
             return newItem; 
-        }
+        },
+        calculateBudget: function() {
+            // calc total income and expenses
+            calculateTotal('exp');
+            calculateTotal('inc');
+            // calc the budget income - expenses
+            data.budget = data.totals.inc - data.totals.exp;
+            // calc the percentage of income that we spent
+            data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100); 
+        },
+        getBudget: function() {
+            return {
+                budget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            }
+        },
     }
 })();
 
@@ -141,10 +169,11 @@ let controller = (function(budgetCtrl, UICtrl) {
     // function to add item // remember each function must do a specific task. 
     let updateBudget = function() {
         // calculate the budget
-
+        budgetCtrl.calculateBudget();
         // return the budget
-
+        let budget = budgetCtrl.getBudget();
         // display budget on the UI
+        
     };
     let ctrlAddItem = function() {
         // when clicked, get field input data
