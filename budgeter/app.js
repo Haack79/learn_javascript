@@ -112,7 +112,7 @@ let budgetController = (function() {
         },
     }
 })();
-
+// *************************************** UI CONTROLLER **********************************
 let UIController = (function() {
     let DOMstrings = {
         inputType: '.add__type',
@@ -125,9 +125,24 @@ let UIController = (function() {
         incomeLabel: '.budget__income--value',
         expensesLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
-        container: '.container'
+        container: '.container',
+        dateLabel: '.budget__title-month'
 
-    }
+    };
+    let formatNumber = function(num, type) {
+        // + or - before number, 2 decimal points, comma separate thousands
+        num = Math.abs(num); 
+        num = num.toFixed(2);
+        let numSplit = num.split('.'); 
+        let int = numSplit[0];
+        
+        if (int.length > 3) {
+            int = int.substr(0, int.length - 3) + ',' + int.subst(int.length - 3, int.length); 
+        }
+        let dec = numSplit[1];
+        // use ternary operator 
+        return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec; // if type = exp then - else +
+    };
     // public function to get data and return object and assign it to UIController variable.
     return {
         getInput: function() {
@@ -167,20 +182,29 @@ let UIController = (function() {
             fieldsArr[0].focus();
         },
         displayBudget: function(obj) {
-            document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-            document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-            document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+            let type = obj.budget > 0 ? 'inc' : 'exp'; 
+            document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+            document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
             if (obj.percentage > 0) {
                 document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
             } else {
                 document.querySelector(DOMstrings.percentageLabel).textContent = 'no % yet';
             }
         },
+        displayMonth: function() {
+            let now = new Date(); 
+            let year = now.getFullYear();
+            let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            let month = now.getMonth(); // returns a number or the month; 
+            document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year; 
+        },
         getDomStrings: function() {
             return DOMstrings; 
         }
     };
 })();
+// ***************************************CONTROLLER **********************************
 
 // separation of concerns, each part of app do their own thing independently,  they have no awareness of the other parts.
 
@@ -249,6 +273,7 @@ let controller = (function(budgetCtrl, UICtrl) {
     return {
         init:  function() {
             console.log('app has started');
+            UICtrl.displayMonth();
             UICtrl.displayBudget({
                 budget: 0,
                 totalInc: 0,
