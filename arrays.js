@@ -1,6 +1,12 @@
 // Arrays are a list of elements
 // zero based,  means first item is 0 indexed
 // added this now 12/21/2019
+/* 
+Remember methods to use on array
+.splice - used to remove elements from array
+.splice(indx, how many)   .splice(3, 1) // this will just remove the element 3
+.slice is to create a copy of the element. 
+*/
 // Initialize New Array
 let names = ['brian', 'dood', 'susie'];
 // or 

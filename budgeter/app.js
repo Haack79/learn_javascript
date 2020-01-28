@@ -74,6 +74,20 @@ let budgetController = (function() {
             // return it to be used
             return newItem; 
         },
+        // to delete, need item type and id 
+        deleteItem: function(type, id) {
+            // cause can't just use id due to id's in array not in order or not existent, so use map
+            // map always returns a new array. 
+            let ids = data.allItems[type].map(function(current) {
+                return current.id; 
+            });
+            let index = ids.indexOf(id); 
+            // splice is used to remove elements from array,  while slice is used to create a copy 
+            if (index !== -1) {
+                // delete from array
+                data.allItems[type].splice(index, 1); // index to start removing and how many to remove  
+            }
+        },
         calculateBudget: function() {
             // calc total income and expenses
             calculateTotal('exp');
@@ -185,6 +199,10 @@ let controller = (function(budgetCtrl, UICtrl) {
                 ctrlAddItem();  
             } 
         });
+        // set event listener that all expense items have in common, the parent element that contains all elements that
+        // will be created or exist within it. We do this to do event delegation since the expense elements will be 
+        // constantly created and deleted, we need something more stable that we can bubble up the actions towards.
+
         document.querySelector(DOMs.container).addEventListener('click', ctrlDeleteItem);
     };
     // function to add item // remember each function must do a specific task. 
@@ -218,10 +236,10 @@ let controller = (function(budgetCtrl, UICtrl) {
         if (itemId) {
             // inc-1  // when using method, js auto wraps it, and converts it to object to perform the method  
             let splitId = itemId.split('-');
-            type = splitId[0];
-            ID = splitId[1];
+            let type = splitId[0];
+            let ID = parseInt(splitId[1]); // convert the ID here to integer since above in delteItem method it will be comparing a number and can't be a string
             // 1. delete the item from the data structure
-
+            budgetCtrl.deleteItem(type, ID); 
             // 2. delete the time from the UI
 
             // 3. update and show the new budget
