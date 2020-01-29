@@ -22,6 +22,17 @@ let budgetController = (function() {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;  
+    };
+    Expense.prototype.calcPercentage = function(totalIncome) {
+        if (totalIncome > 0) {
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        } else {
+            this.percentage = -1;;; 
+        }
+    };
+    Expense.prototype.getPercentage = function() {
+        return this.percentage;     
     };
     let Income = function(id, description, value) {
         this.id = id;
@@ -102,6 +113,18 @@ let budgetController = (function() {
             }
              
         },
+        calculatePercentages: function() {
+            // get percent,  =  expense / income
+            data.allItems.exp.forEach(function(curEl) {
+                curEl.calcPercentage(data.totals.inc);
+            });
+        }, // use map cause can return and store it into variable 
+        getPercentages: function() {
+            let allPerc = data.allItems.exp.map(function(curEl) {
+                return curEl.getPercentage(); // these values get returned and stored into allPerc variable. 
+            }); 
+            return allPerc; // return the array of percentages. 
+        }, 
         getBudget: function() {
             return {
                 budget: data.budget,
@@ -125,7 +148,8 @@ let UIController = (function() {
         incomeLabel: '.budget__income--value',
         expensesLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
-        container: '.container'
+        container: '.container',
+        expensesPercLabel: '.item__percentage'
 
     }
     // public function to get data and return object and assign it to UIController variable.
@@ -156,6 +180,10 @@ let UIController = (function() {
             // insert html into the DOM.  (this is where grab a html element on the index and insert into it)
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml); 
         },
+        deleteListItem: function(selectorId) {
+            let el = document.getElementById(selectorId); 
+            el.parentNode.removeChild(el);
+        },
         clearFields: function() {
             let fields; 
             fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue); // querySelectorAll returns a list.  like an array but without the array methods. 
@@ -175,6 +203,22 @@ let UIController = (function() {
             } else {
                 document.querySelector(DOMstrings.percentageLabel).textContent = 'no % yet';
             }
+        },
+        displayPercentages: function(percentages) {
+            let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
+            // create forEach for nodeList useing first class function with callback. 
+            let nodeListForEach = function(list, callback) {
+                for (var i = 0; i < list.length; i++) {
+                    callback(list[i], i); // list[i] = current,  and i = indx
+                }
+            }
+            nodeListForEach(fields, function(current, indx) {
+                if (percentages[indx] > 0) {
+                    current.textContent = percentages[indx] + '%'; 
+                } else {
+                    current.textContent = '--'; 
+                }
+            });
         },
         getDomStrings: function() {
             return DOMstrings; 
@@ -214,6 +258,14 @@ let controller = (function(budgetCtrl, UICtrl) {
         // display budget on the UI
         UICtrl.displayBudget(budget); 
     };
+    let updatePercentages = function() {
+        // 1. calc percentages
+        budgetCtrl.calculatePercentages();
+        // 2. reac percentages form budget congtroller
+        let percentages = budgetCtrl.getPercentages(); 
+        // 3 update ui with new percentages
+        UICtrl.displayPercentages(percentages); 
+    };
     let ctrlAddItem = function() {
         // when clicked, get field input data
         let input = UICtrl.getInput(); // this comes from the object returned by getInput() function 
@@ -228,6 +280,8 @@ let controller = (function(budgetCtrl, UICtrl) {
             UICtrl.clearFields(); 
             // calculate and update budget
             updateBudget();
+            // calc and update percentages
+            updatePercentages(); 
         } 
     };
     let ctrlDeleteItem = function(event) {
@@ -241,8 +295,11 @@ let controller = (function(budgetCtrl, UICtrl) {
             // 1. delete the item from the data structure
             budgetCtrl.deleteItem(type, ID); 
             // 2. delete the time from the UI
-
+            UICtrl.deleteItem(type, ID); 
             // 3. update and show the new budget
+            updateBudget();
+            // calc and update percentages
+            updatePercentages(); 
         }
     }
     // create public initialization function 
@@ -271,4 +328,6 @@ let controller = (function(budgetCtrl, UICtrl) {
 // clear html fields, use queryseletor all, convert list to an array, loop arrays. 
 
 // how to convert field inputs to numbers parseFloat (change number to have decimals), how to prevent false inputs 
+
+// remove item from the DOM, updated dom, use forEach but for nodelists.
 
