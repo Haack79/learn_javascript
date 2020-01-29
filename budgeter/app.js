@@ -168,6 +168,11 @@ let UIController = (function() {
         // use ternary operator 
         return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec; // if type = exp then - else +
     };
+    let nodeListForEach = function(list, callback) {
+        for (var i = 0; i < list.length; i++) {
+            callback(list[i], i); // list[i] = current,  and i = indx
+        }
+    };
     // public function to get data and return object and assign it to UIController variable.
     return {
         getInput: function() {
@@ -225,11 +230,7 @@ let UIController = (function() {
         displayPercentages: function(percentages) {
             let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
             // create forEach for nodeList useing first class function with callback. 
-            let nodeListForEach = function(list, callback) {
-                for (var i = 0; i < list.length; i++) {
-                    callback(list[i], i); // list[i] = current,  and i = indx
-                }
-            }
+
             nodeListForEach(fields, function(current, indx) {
                 if (percentages[indx] > 0) {
                     current.textContent = percentages[indx] + '%'; 
@@ -244,6 +245,17 @@ let UIController = (function() {
             let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             let month = now.getMonth(); // returns a number or the month; 
             document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year; 
+        },
+        changedType: function() {
+            let fields = document.querySelectorAll(
+                DOMstrings.inputType + ',' +
+                DOMstrings.inputDescription + ',' + 
+                DOMstrings.inputValue
+            );
+            nodeListForEach(fields, function(curNum) {
+                curNum.classList.toggle('red-focus');
+            });
+            document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
         },
         getDomStrings: function() {
             return DOMstrings; 
@@ -274,6 +286,7 @@ let controller = (function(budgetCtrl, UICtrl) {
         // constantly created and deleted, we need something more stable that we can bubble up the actions towards.
 
         document.querySelector(DOMs.container).addEventListener('click', ctrlDeleteItem);
+        document.querySelector(DOMs.inputType).addEventListener('change', UICtrl.changedType); 
     };
     // function to add item // remember each function must do a specific task. 
     let updateBudget = function() {
@@ -341,9 +354,9 @@ let controller = (function(budgetCtrl, UICtrl) {
             });
             setupEventListeners();
         }
-    }
-    controller.init(); 
+    };
 })(budgetController, UIController);
+controller.init(); // initialize the app 
 
 // have to set up function constructors and data structure that the app needs. 
 // how to avoid data conflicts in structure
