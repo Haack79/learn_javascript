@@ -17,3 +17,4 @@ console.log(n.includes('enry')); // true
 console.log(firstName.repeat(3)); // henryhenryhenry
 console.log(`${firstName} `.repeat(2)); // henry henry
 
+// yes
