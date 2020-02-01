@@ -42,3 +42,24 @@ function isFullAge67Limit(limit, ...years) {
 }
 isFullAge67Limit(100, 1900,2001, 1999,2008);
 
+// ********************* DEFAULT PARAMETERS ***************************
+// when you want a parameter to be preset 
+function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+    lastName === undefined ? lastName = 'Smith': lastName = lastName; 
+    nationality === undefined ? nationality === 'america' : nationality = nationality;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality
+};
+var john = new SmithPerson('John', 1990);// this leaves the other params undefined
+
+//   ES6  -----------------------
+// you can declare the defaults where you put the parameters, pretty nice. 
+
+function SmittyPerson(firstName, yearOfBirth, lastName = 'Smitty', nationality = 'america') {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality
+};
