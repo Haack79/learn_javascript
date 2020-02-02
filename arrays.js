@@ -43,3 +43,4 @@ function tipper(bill) {
 let bills = [15, 51, 201];
 let tips = [tipper(bills[0]), tipper(bills[1]), tipper(bills[2])]
 let finalValue = bills[0] + tips[0]; 
+// hello
