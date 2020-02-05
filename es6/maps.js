@@ -26,5 +26,12 @@ question.clear(); // clears     out the whole map
 question.forEach((value, key) => console.log(`this is ${key}, and ${value}`));
 
 for (let [key, values] of question.entries()) {
+    if (typeof(key) === 'number') {
+        console.log(`Answer ${key}`);
+    }
     console.log(`this is ${key}, and ${value}`;
 }
+const ans = parseInt(prompt('what is the answer?'));
+console.log(question.get(ans) === question.get(('correct'))); 
+// with maps can use anything as keys and theya re iterable use iteration methods and
+// has size easy to  add and remove data 

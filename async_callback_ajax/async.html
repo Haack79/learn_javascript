@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <p>remember synchronous is it doing it in one clean sweet, in order line by line. </p>
+    <p>async below ,  first() gets called, runs, does the console.log hey there
+        then calls second function , which calls setTimeout(webapi) that waits for the set setTimeout
+        it goes on and logs console.log 'the end'; 
+        after 2 seconds have passed it will log async in second func hey there; 
+
+        the importance of this is to defer actions to the future to make sure it is non blocking
+        we don't want code to get frozen doing a big load function. 
+    </p>
+    <p> execution stack -> WEbAPIS where settimeout(callbackfunction will wait - > message que and Event Loop
+        execution stack will execute one after the other, while a callback function or setTimeout
+    </p>
+    <script>
+        const second = () => {
+            setTimeout(()=> {console.log('async in second func hey there')}, 2000); //waits 2 seconds // so prints last
+        }
+        const first = () => {
+            console.log('hey there!');// prints first
+            second();
+            console.log('the end'); // prints second
+        }
+        first(); 
+        const image = document.getElementById('img').src;
+        processLargeImage(image, () => {
+            console.log('image processed');
+        });
+
+    </script>
+</body>
+</html>
