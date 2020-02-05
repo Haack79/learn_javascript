@@ -29,11 +29,43 @@
         // the 2 arguments are the callbacks resolve and reject since the executor is what informs 
         // the Promise if it was successfull or not. 
         // If successfull call resolve funciton, if not call reject function. 
-        const getIDs = new Promise((resolve, reject) => {
+        const getIDs = new Promise((resolve, reject) => { 
             setTimeout(() => {
-                resolve([])
-            }, 1500)
+                resolve([523, 883, 432, 974]);   // if do reject it will go to teh error. 
+            }, 1500);
+        });
+        const getRecipe = recID => { // 1. into this getRecipe function we pass in recID, we then pass this into the setTimeout as 3rd argument below in number 2
+            return new Promise((resolve, reject) => {
+                setTimeout(ID => { //3. this is passed in as recID in number 2. 
+                    const recipe = {title: 'fresh pasta', publisher: 'henry'};
+                    resolve(`${ID}: ${recipe.title}`); // 4. then passed in here in callback function
+                }, 1500, recID); // 2. this recID is passed in from getRecipe above. this is then declared as ID in set time out. 
+            });
+        };
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(pub => {
+                    const recipe = {title: 'Italian Pizza', publisher: 'henry'};
+                    resolve(`${pub}: ${recipe.title}`); 
+                }, 1500, publisher);
+            });
+        };
+        // if resolved meaning fulfilled// promise always can be handled with a .then method.  
+        getIDs
+        .then(IDs => {  //IDs is the call back function that the resolve gets put into // this is the fullfilled promise. 
+            console.log(IDs); // this is the array that got resolved [523, 883, 432, 974]; 
+            return getRecipe(IDs[2]); // A. this returns a promise that we return and handled in B below
+        })// B. this 'then' function handles the result of promise from A. above
+        .then(recipe => { // this recipe is what got resolved from 1 getRecipe above. 
+            console.log(recipe); 
+            return getRelated('Henry'); // this returns new Promise
+        }) 
+        .then(recipe => {
+            console.log(recipe); 
         })
+        .catch(error => {
+            console.log(error); 
+        });
     </script>
 </body>
 </html>
