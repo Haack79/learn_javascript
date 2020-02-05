@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax API</title>
+</head>
+<body>
+    <h1>Ajax API </h1>
+<h2>ajax</h2>
+<p>ajax is asynchronous javascript and xml and allows you to communicate with remote servers asynchronously 
+    the browser/ client is running trying to get some data from servers.
+    want to get the data without having to reload the whole page, 
+    with ajax can do a get request that gets data asynchronous 
+    can send data with a post
+</p>
+<h2>API</h2>
+<p>Application Programming Interface piece of software that can be used by another piece of software
+    to allow apps to talk to each other. 
+    api is part of the server, application part that recieves requests and sends back responses
+    There are 3rd party api's that you can use to get information from other servers such 
+    as a weather api, google map api, embed youtube,  or send emails / text from venmo
+</p>
+<p> there are a few ways to make ajax calls but we will use fetch and promises
+    will use web API called FETCH - available in the browser but not a part of javascript
+    can use it to fetch asynchronously data across the internet  to fetch data from servers or our own
+    This used to be done using the complex javascript XML HttpRequest
+</p>
+<p><em>cross or same origing policy which prevents from making ajax requests to different domain than your own</em>
+    to allow making request to different domins us Cross Origin Resource Sharing (CORS);
+    For this to work, the ones that made the api have to implement CORS on their server.
+    if unable, way to get around
+    proxy or channel the request through their own server. do ajax request on own server.
+    cause it's yours, not going to see same origin policy issue
+
+    if you dont want to use your server, a service does it,  crossorigin.me  
+
+    FETCH gets data and returns a Promise and it has data or an error 
+
+</p>
+    <script>
+        // make AJAX calls ith fetch and promises 
+        // fetch(apiurl)  // metaweather.com api doesn't need a key // 
+        // weather returns json, an entire string 
+        // below use crossorigin.me
+        function getWeather(location) {
+            fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/search/?query=${location}`)
+            .then(result => {
+                console.log(result); // entire response
+                return result.json(); // returns async this data
+            })
+            .then(data => {
+                //console.log(data); // now has the data we want. 
+                const today = data.consolidated_weather[0];
+                console.log(`temperatures in ${data.title} is between ${today.min_temp} and ${today.max_temp}`);
+            })
+            .catch(error => {
+                console.log(error); 
+            });
+        }
+        getWeather('london'); 
+        // -----------
+        async await function getWeatherAW(location) {
+        try {
+            const result = fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/search/?query=${location}`);
+            const data = await result.json();
+            console.log(data); 
+            const tomorrow = data.consolidated_weather[1];
+            console.log(`temp for tomorrow ${data.title} will be between ${tomorrow.min_temp} and ${tomorrow.max_temp}`);
+            return data;  // this returns result value of the Promise
+            } catch(e) {
+                console.log(e); 
+                alert(e); 
+            }
+        }
+        let londonData; 
+        // remember this .then gives us access to the data returned from the Promise above. that way you can use it.
+        // it will wait and then show the data. 
+        getWeatherAW('london').then(data => {londonData = data; console.log(londonData)});  
+    </script>
+</body>
+</html>
