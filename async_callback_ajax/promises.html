@@ -26,8 +26,13 @@
         </p>
     <script>
         // first function is callback and called executor function and takes 2 arguments.
-        const getIDs = new Promise(() => {
-
+        // the 2 arguments are the callbacks resolve and reject since the executor is what informs 
+        // the Promise if it was successfull or not. 
+        // If successfull call resolve funciton, if not call reject function. 
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([])
+            }, 1500)
         })
     </script>
 </body>
