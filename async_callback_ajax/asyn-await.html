@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Async Await</title>
+</head>
+<body>
+    <h1>Async Await</h1>
+    <p>Introduced to help make it easier to handle Promises 
+        made for us to consume / handle not Produce
+
+    </p>
+    <script>
+        const getIDs = new Promise((resolve, reject) => { 
+            setTimeout(() => {
+                resolve([523, 883, 432, 974]);   // if do reject it will go to teh error. 
+            }, 1500);
+        });
+        const getRecipe = recID => { // 1. into this getRecipe function we pass in recID, we then pass this into the setTimeout as 3rd argument below in number 2
+            return new Promise((resolve, reject) => {
+                setTimeout(ID => { //3. this is passed in as recID in number 2. 
+                    const recipe = {title: 'fresh pasta', publisher: 'henry'};
+                    resolve(`${ID}: ${recipe.title}`); // 4. then passed in here in callback function
+                }, 1500, recID); // 2. this recID is passed in from getRecipe above. this is then declared as ID in set time out. 
+            });
+        };
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(pub => {
+                    const recipe = {title: 'Italian Pizza', publisher: 'henry'};
+                    resolve(`${pub}: ${recipe.title}`); 
+                }, 1500, publisher);
+            });
+        };
+        // in Promises we used .then and catch here to handle promises here is where we use async await
+        async function getRecipesAW() { // async returns promise and runs in background
+            const IDs = await getIDs; // this await stops code from running until promise is fulfilled then fills
+            console.log(IDs); // [523, 883, 432, 974]; 
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+            const related = await getRelated('henry');
+            console.log(related); 
+
+            return recipe;
+        }
+        getRecipesAW().then(result => console.log(`${result} is awesome`);)
+//    const rec = getRecipesAW();
+//    console.log(rec); // prints out Promise cause the above async is still running and hasn't returned the data yet. 
+    </script>
+</body>
+</html>
