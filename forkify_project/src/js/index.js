@@ -34,13 +34,15 @@
 // current recipe.
 // light recipes. 
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as SearchView from './views/searchView';
-import { elements } from './views/base';
-
+import { elements, renderLoader, clearLoader } from './views/base';
+// The State of the app 
 const state = {};
+// search controller 
 const controlSearch = async () => { // cause doing an await inside need to make this async. 
     //1 get the query;
-    const query = searchView.getInput(); 
+    const query = SearchView.getInput(); 
     console.log(query); 
     //2create new search object
     if (query) {
@@ -48,19 +50,35 @@ const controlSearch = async () => { // cause doing an await inside need to make 
         state.search = new Search(query); 
 
         //3 prepare UI for results
-        searchView.clearInput(); 
-        searchView.clearResults();
+        SearchView.clearInput(); 
+        SearchView.clearResults();
+        renderLoader(elements.searchRes); 
         // 4 Search for recipes. 
         await state.search.getResults(); // this returns a promise cause it's an async function 
         // 5 render results on UI
+        clearLoader(); 
         console.log(state.search.result); 
-        searchView.renderResults(state.search.result);
+        SearchView.renderResults(state.search.result);
     }
 }
-elements.searchForm.addEventListener('submit', e => {
-    e.preventDefault(); 
+elements.searchForm.addEventListener('submit', event => {
+    event.preventDefault(); 
+    controlSearch();
 });
-
+elements.searchResPages.addEventListener('click', event => {
+    // console.log(event.target); 
+    // use closest cause all the little click things it returns closes ancester
+    const btn = event.target.closest('.btn-inline');
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10); // access way to data from ui
+        SearchView.clearResults(); 
+        SearchView.renderResults(state.search.result, goToPage);
+    }
+})
+// Recipe Controller
+const r = new Recipe(234234); //pass in id. 
+r.getRecipe(); 
+// console.log(r);  this is where you will see the object from Recipe.js
 const search = new Search('pizza'); // this argument is the query for the object in search.js
 console.log(search); 
 

@@ -1,5 +1,27 @@
 export const elements = {
     searchInput: document.querySelector('.search__field'),
     searchForm: document.querySelector('.search'),
-    searchResList: document.querySelector('.results__list')
+    searchResList: document.querySelector('.results__list'),
+    searchRes: document.querySelector('.results'),
+    searchResPages: document.querySelector('.results__pages')
+};
+export const elementStrings = {
+    loader: 'loader'
+}
+// pass one argument into the loader which is the parent element
+// and then say want to attach this loader here as a child element of the parent.
+// 
+export const renderLoader = parent => {
+    const loader = `
+    <div class="${elementStrings.loader}">
+        <svg>
+            <use href="img/icons.svg#icon-cw"></use>
+        </svg>
+    </div>
+    `
+    parent.insertAdjacent('afterbegin', loader); 
+};
+export const clearLoader = () => {
+    const loader = document.querySelector(`.${elementStrings.loader}`); 
+    if (loader) loader.parentElement.removeChild(loader);
 };
