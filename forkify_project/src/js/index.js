@@ -53,18 +53,24 @@ const controlSearch = async () => { // cause doing an await inside need to make 
         SearchView.clearInput(); 
         SearchView.clearResults();
         renderLoader(elements.searchRes); 
-        // 4 Search for recipes. 
-        await state.search.getResults(); // this returns a promise cause it's an async function 
-        // 5 render results on UI
-        clearLoader(); 
-        console.log(state.search.result); 
-        SearchView.renderResults(state.search.result);
+        try {
+            // 4 Search for recipes. 
+            await state.search.getResults(); // this returns a promise cause it's an async function 
+            // 5 render results on UI
+            clearLoader(); 
+            console.log(state.search.result); 
+            SearchView.renderResults(state.search.result);
+        } catch (err) {
+            alert('Something go bad with the search...');
+            clearLoader(); 
+        }
     }
 }
 elements.searchForm.addEventListener('submit', event => {
     event.preventDefault(); 
     controlSearch();
 });
+// if you want to test,  window.addEventListener('load'); 
 elements.searchResPages.addEventListener('click', event => {
     // console.log(event.target); 
     // use closest cause all the little click things it returns closes ancester
@@ -75,12 +81,45 @@ elements.searchResPages.addEventListener('click', event => {
         SearchView.renderResults(state.search.result, goToPage);
     }
 })
-// Recipe Controller
-const r = new Recipe(234234); //pass in id. 
-r.getRecipe(); 
+// Recipe Controller *****
+const controlRecipe = async () => {
+    // get id from url 
+    const id = window.location.hash.replace('#', ''); // get rid of the hash , replace it with empty space
+    // console.log(id); 
+    if (id) {
+        //prepare UI for changes
+
+        // create new recipe object
+        state.recipe = new Recipe(id);
+        // test window.r = state.recipe;
+        try {
+            // Get recipe data
+            await state.recipe.getRecipe();
+            console.log(state.recipe.ingredients); 
+            state.recipe.parseIngredients(); 
+            // Calculate serving and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+            // Render recipe
+            console.log(state.recipe);
+        } catch (err) {
+            alert('-----------Error processing recipe-----------------'); 
+        }
+    }
+};
+// * instead of doing this below and assigning multiple events to a single event. 
+// window.addEventListener('hashchange', controlRecipe); 
+// window.addEventListener('load', controlRecipe);
+// * Can make an array with events and loop through it and pass into eventlistener the evnt.
+
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+
+// const r = new Recipe(234234); //pass in id. 
+// r.getRecipe(); 
 // console.log(r);  this is where you will see the object from Recipe.js
-const search = new Search('pizza'); // this argument is the query for the object in search.js
-console.log(search); 
+// const search = new Search('pizza'); // this argument is the query for the object in search.js
+// console.log(search); 
 
 
 // application state and controllers. 
