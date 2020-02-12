@@ -35,6 +35,7 @@
 // light recipes. 
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List'; 
 import * as SearchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
@@ -135,7 +136,7 @@ elements.recipe.addEventListener('click', event => {
         recipeView.updateServingsAndIngredients(state.recipe);
     }
 });
-
+window.l = new List(); 
 // const r = new Recipe(234234); //pass in id. 
 // r.getRecipe(); 
 // console.log(r);  this is where you will see the object from Recipe.js
