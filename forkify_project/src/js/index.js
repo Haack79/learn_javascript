@@ -91,7 +91,8 @@ const controlRecipe = async () => {
         //prepare UI for changes
         recipeView.clearRecipe(); 
         renderLoader(elements.recipe); 
-
+        // Highlight selected search item
+        if (state.search) SearchView.highlightSelected(id); 
         // create new recipe object
         state.recipe = new Recipe(id);
         // test window.r = state.recipe;
@@ -119,7 +120,21 @@ const controlRecipe = async () => {
 // * Can make an array with events and loop through it and pass into eventlistener the evnt.
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
-
+// need event delegation cause elements not there as page is loaded.
+// handling recipe button clicks
+elements.recipe.addEventListener('click', event => {
+    if (event.target.matches('.btn-decrease, .btn-decrease *')) /* this * is any child of that selector */ {
+        // Decrease button clicked
+        if (state.recipe.servings > 1) {
+        state.recipe.updateServings('dec'); 
+        recipeView.updateServingsAndIngredients(state.recipe);
+        }
+    } else if (event.target.matches('.btn-increase, .btn-increase *')) {
+        // button increase clicked. 
+        state.recipe.updateServings('inc');
+        recipeView.updateServingsAndIngredients(state.recipe);
+    }
+});
 
 // const r = new Recipe(234234); //pass in id. 
 // r.getRecipe(); 
