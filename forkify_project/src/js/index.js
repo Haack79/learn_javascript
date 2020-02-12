@@ -38,6 +38,7 @@ import Recipe from './models/Recipe';
 import List from './models/List'; 
 import * as SearchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 // The State of the app 
 const state = {};
@@ -120,6 +121,18 @@ const controlRecipe = async () => {
 // window.addEventListener('load', controlRecipe);
 // * Can make an array with events and loop through it and pass into eventlistener the evnt.
 
+// make list controller
+const controlList = () => {
+    // Create a new list if there is none yet; 
+    if (state.list) state.list = new List(); 
+    // Add each ingredient to the list
+    state.recipe.ingredients.forEach(el => {
+    const item = state.list.addItem(el.count, el.unit, el.ingredient); 
+    listView.renderItem(item); 
+    });
+}
+
+
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 // need event delegation cause elements not there as page is loaded.
 // handling recipe button clicks
@@ -134,6 +147,8 @@ elements.recipe.addEventListener('click', event => {
         // button increase clicked. 
         state.recipe.updateServings('inc');
         recipeView.updateServingsAndIngredients(state.recipe);
+    } else if (event.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+        controlList(); 
     }
 });
 window.l = new List(); 
