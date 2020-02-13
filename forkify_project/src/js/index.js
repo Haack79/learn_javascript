@@ -42,6 +42,7 @@ import * as listView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 // The State of the app 
 const state = {};
+// window.state = state; // only for when testing items in the browser.
 // search controller 
 const controlSearch = async () => { // cause doing an await inside need to make this async. 
     //1 get the query;
@@ -125,13 +126,27 @@ const controlRecipe = async () => {
 const controlList = () => {
     // Create a new list if there is none yet; 
     if (state.list) state.list = new List(); 
-    // Add each ingredient to the list
+    // Add each ingredient to the list and UI
     state.recipe.ingredients.forEach(el => {
     const item = state.list.addItem(el.count, el.unit, el.ingredient); 
     listView.renderItem(item); 
     });
 }
-
+// handle delete and update list item events
+elements.shopping.addEventListener('click', event => {
+    const id = event.target.closest('.shopping__item').dataset.itemid;
+    // handle the delete button
+    if (event.target.matches('.shopping__delete, .shopping__delete *')) {
+        // delete from state
+        state.list.deleteItem(id);
+        // delete from ui
+        listView.deleteItem(id); 
+        // handle count update. 
+    } else if (event.target.matches('.shopping__count-value')) {
+        const val = parseFloat(event.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+});
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 // need event delegation cause elements not there as page is loaded.
