@@ -7,13 +7,14 @@ export const clearRecipe = () => {
 const formatCount = count => {
     if (count) {
         // ex. count = 2.5 --> 2 1/2  ; count - 0.5 --> 1/2
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
-        if (!dec) return count; 
+        const newCount = Math.round(count * 10000) / 10000; 
+        const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
+        if (!dec) return newCount; 
         if (int === 0) {
-            const frac = new Fraction(count);
+            const frac = new Fraction(newCount);
             return `${frac.numerator}/${frac.denominator}`;
         } else {
-            const frac = new Fraction(count - int);
+            const frac = new Fraction(newCount - int);
             return `${frac.numerator}/${frac.denominator}`;
         }
     }
@@ -34,7 +35,7 @@ const createIngredient = ingredient => ``
 //     //     </div>
 //     // </li>
 // `
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe, isLiked) => {
 
 export const renderRecipe = recipe => `
     <li class="recipe__item">
@@ -85,7 +86,7 @@ export const renderRecipe = recipe => `
         </div>
         <button class="recipe__love">
             <svg class="header__likes">
-                <use href="img/icons.svg#icon-heart-outlined"></use>
+                <use href="img/icons.svg#icon-heart${isLiked ? '' : '-outlined'}"></use>
             </svg>
         </button>
         </div>

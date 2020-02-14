@@ -17,7 +17,7 @@ export const highlightSelected = id => {
     resultsArr.forEach(el => {
         el.classList.remove('results__link--active')
     })
-    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');  //make sure put className and not selector with .results
+    document.querySelector(`results__link[href="#${id}"]`).classList.add('results__link--active');  //make sure put className and not selector with .results
 };
 
 /*'past with tomato and spinach'
@@ -27,7 +27,7 @@ acc: 9 / acc  cur.length = 15 / new Title = ["pasta", "with", "tomato"]
 acc: 15 / acc  cur.length = 18 / new Title = ["pasta","with", "tomato"] -> cause limit is over 17 not pushin gnew word into array
 acc: 15/ acc  cur.length = 24 / new Title = ["pasta","with", "tomato"]
 */
-const limitRecipeTitle = (recipe, limit = 17) => {
+export const limitRecipeTitle = (recipe, limit = 17) => {
     const newTitle = []; 
     if (title.length > limit) {
         title.split(' ').reduce((acc, cur) => {
