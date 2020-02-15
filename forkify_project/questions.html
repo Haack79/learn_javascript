@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Questions</title>
+</head>
+<body>
+    <h1>Questions to Know</h1>
+    <p>
+        What are primitive types , boolean, number, string, undefined, null
+        javascript operator is similar to a function
+        A constructor is a function that initializes an object. -method to create and initialize and object created 
+        within a class. 
+        1 == true // true - cause of type coersion 
+        1 === true // false
+        True && False = False
+        A = true; B = false; 
+        !(A||!B) && (A && !B && A) || (A || B)  = True
+        "2" + 3 returns "23" cause of coersion of 3 to a string and strings added.
+        function attached to a an object - -method
+        browser, global execution context is - window 
+        can you call funciton expression a at line 126 if a is declared in line 253? 
+        -no only function declarations cna do this cause of hoisting.
+        Thanks to Hoisting, Variables are set to undefined in the creation phase.
+        anonymous functions - create a new scope, usually not accessible after initial creation,
+        usually declared without any named identifier referring to them,  usually formed with closures
+        remember scope chain Function A() {let x = 1 function B() {console.log(x)}} // 1
+        Scopes are created by Functions - true
+        the "this" keyword - created for each execution context, in method call, the 'this' keyword points to the obect its attached to
+        in a method call the 'this' keyword is only defined as soon as the method gets called.
+        DOM events are processed when execution stack is empty
+        Event Delegation - use it when we need event handlers on unknonwn number of elements that are all children
+        of a known element, makes use of event bubbling because event bubbling allow us to 'wait' until an event bubbles up to aknown element,
+        use it when we need event handlers that are not in the DOM when our code enters the execution phase.
+        Need event Object because it carries the key code property
+        suppose create 2 new objects using a function constructor , how can we allow both objects to have access to a new method we creaet?
+        - add the method to the protoype property of the funciton constructor. this is prototypal inheritance. 
+        _____**** Composition > Inheritance. _______
+        Composition - design types by what they do 
+        Inheritance is when you design the type by what they are. (creates Gorilla with a banana problem)
+        new operator will create new empty object, calls a function, and makes the 'this' variable of teh called function
+        point to the newly created object. BUT IT Does not return an execution context
+        functions is an object in js cause its prototype is an object, and so it inherits methods from the prototype
+        Object A = Object B,  Mutating property X on A ,  X on B will be mutated cause A and B point to the same object.  
+        array has acces to map method cause prototype chain
+        map returns a new array,  
+        forEach does not return new array.
+        cause of closures - function A can declare variable x and returns function b and function 
+        b can access variable x still.
+        callback function is function passed to another function as an argument. 
+        immediately invoked function expression is only called once.
+        call method is useful for method borrowing cause it allows us to set the this variable manually
+        Function.bind() -- creates a new function with preset arguments ! 
+        encapsulation code cannot be overwrite private function and variables, exposed public interface is api
+        exposed function can be accessed from the outer scope,  
+        in module pattern, why can public methods access private functions and variables? - because closure was created.
+
+    </p>
+</body>
+</html>
