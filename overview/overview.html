@@ -75,34 +75,81 @@
         15 % 5 = 0;
 
     </p>
-    <p>
-        Operators part 2
-        incrememnt or decrement
-
-        ++/ -- 
-        -= / x >>>= y unsigned right shift assignment.
-        x += y  /  same as x = x + y  
-        x = y = z   all equal same thing. 
-
-    </p>
-    <h3>miles to kilometer converter</h3>
-    <p id="miles2kilometer"></p>
     <script>
-        let speedInMPH = prompt('how fast is your need for speed?');
-        let speed = parseInt(speedInMPH) * 1.60934;
-        let message = `Your speed in kilometers is ${speed}`;
-        alert(message); 
+        let myMessage = 'hello window';
+        if (true) {
+            let myMessage = 'i\'m scoped'; 
+            console.log(myMessage);
+        }
+        console.log(myMessage);  
+        //output  i'm scoped  hellow window      if you used var, i'm scoped would print out twice. 
+        let message = 'hello'; 
+        console.log(message); // hello
+        if(message) {
+            message = 'yo yo';
+        }
+        console.log(message) // yo yo 
+
+        let message;
+        console.log(message); // undefined
+        message = null;
+        if(true) {
+            let message = 'update to hi';
+            console.log(message); // updated to hi
+        }
+        console.log(message); // null 
     </script>
-    <h3>Comparison Operators</h3>
+    <h3>DATA Types and variables </h3>
     <p>
-        
+        if you don't assign a variable it is undefined. 
+        camel case userFirstName 
+        must start with letter, underscore or dollar sign, subsequent letters can be digits.
+        but no spaces,  case sensitive. no reserved words
+
     </p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
+    <h3>JS prompt</h3>
+    <p>
+        create interaction with users.  result = prompt('message', default); 
+        fn(message:string, value:string) : string
+        prompt(what is your name); 
+        let message = 'welcome to my site';
+        console.log(message + username);
+    </p>
+    <h3>template literal</h3>
+    <p> use backtic to wrap content 
+        template literals, peppered strings.  can put js into it. 
+        `sasdf ${hello}`
+        let name = prompt('what is your name?');
+        console.log(`hi ${name} welcome to my site`);
+        let name = prompt('what is your name'); alert(`hi ${name} you smell haha`);
+    </p>
+    <h3>js data types</h3>
+    <p>
+        boolean true /false
+        Number
+        string
+        var d = null; explicitly nothing - null
+        var e; has no value but is declared, so not assigned = undefined
+        var f = Symbol("value");  represents a unique identifier = symbol (ecma 2015) datatype whose instances are unique and immutable
+        almost everything is <Object>type conversion</Object>
+        String(10);  100.toString 
+        Number/  NaN
+        temp + 5
+        "hello" - "world" = NaN
+        typeof 
+        "5" + 5 = "55"
+        "10" - 5 = 5
+        typeof null = "object"
+        typeof undefined = "undefined"
+
+    </p>
+    <h3>JS Operators</h3>
+    <p>
+        mozilla  shows
+        (2 + 3 - 1) = 4
+        (4 * 3/ 2) 12 / 2 = 6 
+        (11%3 **2) 11 %9 output 2
+    </p>
     <h3></h3>
     <p></p>
     <h3></h3>
