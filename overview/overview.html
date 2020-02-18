@@ -55,11 +55,48 @@
         var declares a variable opttionally initializing it to a value
         let declares a block-scoped local variable, blocks indicated by {} can be re-assigned. 
         const declares block-scoped read-only named constant, cannot be changed. 
+        5 + 'foo' = "5foo"
+        true + 1 = 2
+        false + false = 0; 
+        'foo' + false = 'foofalse'; 
+        'foo' -3 = NaN / whenever trying to subtract from a string, gives NaN
+        0/5 .5 
+        Infinity * 0 = NaN
+        Infinity * Infinity = Infinity
+        'foo' * 2 = NaN
+        modulus remainder operator %
+        12 % 5 = 2  
+        -1 % 2 = -1
+        1 % -2 = 1
+        order - multiplication, division, addition, subtraction
+        (2 +4 * 5) = 3 + 20 = 23
+        wrap in brackets () to make other functions form first
+        (2 + 3) * 5 = 25
+        15 % 5 = 0;
+
     </p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
+    <p>
+        Operators part 2
+        incrememnt or decrement
+
+        ++/ -- 
+        -= / x >>>= y unsigned right shift assignment.
+        x += y  /  same as x = x + y  
+        x = y = z   all equal same thing. 
+
+    </p>
+    <h3>miles to kilometer converter</h3>
+    <p id="miles2kilometer"></p>
+    <script>
+        let speedInMPH = prompt('how fast is your need for speed?');
+        let speed = parseInt(speedInMPH) * 1.60934;
+        let message = `Your speed in kilometers is ${speed}`;
+        alert(message); 
+    </script>
+    <h3>Comparison Operators</h3>
+    <p>
+        
+    </p>
     <h3></h3>
     <p></p>
     <h3></h3>
