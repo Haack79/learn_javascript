@@ -149,25 +149,184 @@
         (2 + 3 - 1) = 4
         (4 * 3/ 2) 12 / 2 = 6 
         (11%3 **2) 11 %9 output 2
+
     </p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
-    <h3></h3>
-    <p></p>
+    <h3>Comparison Operators </h3>
+    <p>
+        != /  !== 
+        === 
+        3 == '3' true; 
+    </p>
+    <h3>falsy and true values</h3>
+    <p>
+        false
+        undefined
+        null
+        0
+        NaN
+        empty string ''
+        TRuthy
+        True, 
+        has value
+        1
+    </p>
+    <h3>IF Else/ Ternary</h3>
+    <p>
+        if , else if, else 
+        Ternary:
+        condition ? val1 : val2  often used to shorten if statements. 
+        iftrue ? returnval1: else return val2
+        18 > 3 ? 'yes': 'no' // returns yes 
+    </p>
+    <h4>multiple conditions</h4>
+    <p>
+    ||  = or  && and 
+    </p>
+    <h3>SWITCH</h3>
+    <p>
+        function check(val) {
+            switch(val) {
+                case 'one':
+                message('it was one');
+                break;
+                case 'hello':
+                message('say hello');
+                break;
+                default:
+                message('final'); 
+            }
+        }
+    </p>
+    <h3>js Functions </h3>
+    <p>
+        js is all about functions yeee
+        function definition / function declaration or function statement 
+        function fnName(parameter) {
+            return parameter; 
+        }
+        let counter = 0;
+        counting(nice);
+        function counting(para) {
+            counter++; 
+            console.log('this is how many times i ran it' + counter); 
+        }
+    </p>
+    <h4>function params</h4>
+    <p>
+        params in function definition, 
+        arguments values received by function when it is invoked.
+    </p>
+    <h4>Default arguments</h4>
+    function adder1(numOne = 2, numTwo)  default it in the param 
+    function adder2(numOne, numTwo) {
+        numTwo = numTwo || 5;  // here it's either assigned cause its passed in as argument or auto assigned to 5. 
+    }
+    function adder3(numOne, numTwo) {
+        numTwo = typeof numTwo !== 'undefined' ? numTwo : 5; //ternary operator 
+    }
+    <h4>the Return</h4>
+    <p>
+        input, code block, output 
+        functino multiply(x,y) {return x * y}; function declaration
+        let multiplier = function(a, b) {return a * b}; //function expression assign to anonymous function.  but can only use this function after defined it.
+    </p>
+    <h4>html function</h4>
+    <p>
+        functions as attributes onlick="messages()" in element
+        event listeners on DOM 
+        <button type="button" onclick="message1()">#1</button>
+        <script>
+            function message1() {
+                var1++;
+                message(); 
+            }
+        </script>
+    </p>
+    <h4>DOM elements </h4>
+    <p>
+        const btns = document.querySelectorAll('button'); can now access all 3 buttons.
+        btns[0].onclick = message1; 
+    </p>
+    <h4> Declarations vs Expressions for functions</h4>
+    <p>
+        declarations are hoisted 
+        expressions are not
+
+    </p>
+    <h4>Function Scope </h4>
+    <p>
+        scope is about where value of variable is declared.
+        for functions can only access variable in the function scope
+        let a = 5;
+        function test() {console.log(a)}; 
+    </p>
+    <h3>Recursion</h3>
+    <p> create quick loop of content
+        function within itself,  a function that calls itself within itself.
+        function loop(x) {
+            if (x >= 10) return;  // end or escape condition
+            console.log(x);
+            loop(x + 1); // recursive call
+        }
+
+        guesser
+        <script>
+        let secretNumber = 5;
+        let guess; 
+        function guesser() {
+            let guess = prompt('what is da numbaaaa');
+            let numGuess = parseInt(guess);
+            if (numGuess === secretNumber) {
+                alert('congrats!');
+                return;
+            }
+            let message = (numGuess > secretNumber) ? 'lower': 'higher';
+            console.log('wrong Go' + message); 
+            guesser();
+        }
+        </script>
+    </p>
+    <h3>IIFE Immediately Invoked Function expressions runs soon as it is defined. </h3>
+    <p>
+        they are anonymous, self executing, immediately invokes itself. can contain the scope 
+        can pass in a value
+        (function(param) {
+            console.log('hi' + param); 
+        })('brian');
+        let result = (function() {return 'hello'}); console.log(result()); 
+    </p>
+    <h3>ES6 ARROW FUNCTIONS</h3>
+    <p>
+        const fnName = (x) => x * 3; const fnName = x => x * 3; 
+
+    </p>
+    <h3>OBJect Arrays</h3>
+    <p>
+        objects name value pairs
+        property: value
+        person.message = function() {
+            return 'hello';
+        
+        }
+        mozilla
+        get values,  dot notation  and bracket notation  object.property = value of property in that object 
+        add property value in object  
+        object.newProperty = "new value"    car.color = 'black';  car { color: black }; 
+        <h4>Object method</h4>
+        <p>can run functions within objects.  functions part of object = method
+            const myCar = { turnOn: function() {console.log("started")}};
+        }    myCar.turnOn(); 
+        </p>
+    </p>
+    <h4>functions create objects</h4>
+    <p>function Car(miles, company, color, price) {
+        this.color = color;
+        this.miles = miles;
+        this.company = company;
+        this.price = price;
+    }
+    const myCar1 = new Car(100, 'honda', 'blue', 2505); 
+    </p>
     <h3></h3>
     <p></p>
     <h3></h3>
