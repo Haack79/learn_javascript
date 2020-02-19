@@ -302,6 +302,8 @@
     </p>
     <h3>OBJect Arrays</h3>
     <p>
+        both use memory reference, so can use const cause they are referencing data.
+
         objects name value pairs
         property: value
         person.message = function() {
@@ -319,7 +321,8 @@
         </p>
     </p>
     <h4>functions create objects</h4>
-    <p>function Car(miles, company, color, price) {
+    <p>function to make an object. 
+        function Car(miles, company, color, price) {
         this.color = color;
         this.miles = miles;
         this.company = company;
@@ -327,8 +330,61 @@
     }
     const myCar1 = new Car(100, 'honda', 'blue', 2505); 
     </p>
-    <h3></h3>
-    <p></p>
+    <h3>Arrays</h3>
+    <p>
+        give ability to have single variable and store multiple values 
+        can store all kinds of values and elements in it.
+        can access array by index Number
+        arrayName[indexValue] 
+        const list = ['hi', true, 30, null, undefined, {test: 'one', score:50}, ['one', 'two']]
+        list[5].score or list[5]['score'] = 50;     list[6][1]; 
+
+    </p>
+    <h4>Power Up </h4>
+    <p>
+        arrays have - memory refernce, array length, check if its an array, indexOf, methods to add remove
+        splice remove from array at index value
+        arrName.length  ; 
+        arrName.push() pushes to end of an array;  
+        arrName.pop() takes out last item in array / also can get the value popped off.  let element = arrName.pop();
+        arrName.shift() removes first item in array
+        arrName.unshift('element'); adds item to front of array.
+        array = ['bat', 'ball', 'hat'];  array.indexOf('banana') = -1 which means doesn't exist.
+        array.indexOf('ball') returns 1; 
+        splice(position, 1); returns items that got removed if you want to assign them to variable.
+        will remove (whats here, and then how ever many for amount you put here including it)
+        so  array = [a, b, c, d, e]   array.splice(1,2) - removes b and c 
+
+        Array.isArray(myArray); 
+        updated list[1] = 'whatttt';
+        sort them
+        reverse them
+        concat
+        findInArray
+        indexOf
+        myArr.concat(anotherArray);
+        myArr.find(); let found = array.find(function(element) {
+            return element > 10; 
+        });
+        sort()  will do numbers first and then letters and if letter, it will be a - z
+        .filter() - creates a new array with all elements that pass the test implemented by the provided function
+        const longWords = words.filter(word => word.length > 6); 
+
+    </p>
+    <h4>Array Loops</h4>
+    <p>
+        loops and iterations  
+        while, do while / runs at least once, for (); 
+        challenge: 
+        let array = [];
+        for (let i = 0; i < 10; i++) {
+            let bool = i % 2 === 0 ? 'true': 'false';
+            array.push({"name": `lesson ${i}`, "status": `${bool}`})
+        }
+        console.log(array); 
+        // now return whats true.
+        const itsTrue = array.filter((el) => {el.status});
+    </p>
     <h3></h3>
     <p></p>
     <h3></h3>
